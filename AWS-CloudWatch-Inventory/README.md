@@ -1,4 +1,4 @@
-# AWS CloudWatch Inventory | Cost Optimization | Automation
+# AWS CloudWatch Inventory | Cost Optimization
 
 ## Pre-Requisites
 If you are creating this stack from your local or from EC2 instance, provide necessary permissions on following services to succesfully create stack
