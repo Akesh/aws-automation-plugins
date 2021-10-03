@@ -48,7 +48,7 @@
           "Fn::GetAtt" : [ "LambdaRole", "Arn" ]
         },
         "FunctionName" : "CloudWatchInventory",
-        "Code" : "D:\\Work\\BZ_Docs\\AWS Plugins\\CloudWatchDataInventory"
+        "Code" : "<LOCAL_PATH_TO_LAMBDA_CODE>"
       }
     },
     "APIGatewayAccessRole" : {

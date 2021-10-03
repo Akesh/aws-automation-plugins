@@ -44,7 +44,7 @@ Resources:
       FunctionName: CloudWatchInventory
       Code:
         S3Bucket: bfsenvconfig
-        S3Key: 9a77bce73c142a69d8594f0c1943b423
+        S3Key: 5881c431b1877699495e2a41d8725e1f
   APIGatewayAccessRole:
     Type: AWS::IAM::Role
     Properties:
