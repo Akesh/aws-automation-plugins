@@ -1,4 +1,4 @@
-# AWS CloudWatch Inventory: Logging Permission
+# AWS CloudWatch Inventory | Cost Optimization | Automation
 
 ## Pre-Requisites
 If you are creating this stack from your local or from EC2 instance, provide necessary permissions on following services to succesfully create stack
@@ -8,7 +8,7 @@ If you are creating this stack from your local or from EC2 instance, provide nec
 - API gateway
 
 ## Capability
-This automation aims to list all the cloudwatch log groups in a region and data-size of each log group. Lambda function can be invoked with API Gateway URL `GET` and data will be published in a `HTML Table` on your browser
+This automation intents to list all the cloudwatch log groups in a region and data-size of each log group. Lambda function can be invoked with API Gateway URL `GET` and data will be published in a `HTML Table` on your browser. This data is useful to identify log groups with high data ingestion and stored bytes. This can be used to take necessary actions for cost optimization in CloudWatch
 
 ## Quick Start
 
