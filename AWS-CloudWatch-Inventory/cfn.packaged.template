@@ -43,8 +43,8 @@ Resources:
         - Arn
       FunctionName: CloudWatchInventory
       Code:
-        S3Bucket: cloudwatchinventorybucket
-        S3Key: a4e7239ec852cfa3bb45bfceecabc956
+        S3Bucket: bfsenvconfig
+        S3Key: 9a77bce73c142a69d8594f0c1943b423
   APIGatewayAccessRole:
     Type: AWS::IAM::Role
     Properties:
