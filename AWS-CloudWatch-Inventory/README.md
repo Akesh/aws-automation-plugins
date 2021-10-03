@@ -12,17 +12,17 @@ This automation intents to list all the cloudwatch log groups in a region and da
 
 ## Quick Start
 
-Update:
+1. Update:
     Update `cfn.template` to update following properties
     - Find logical id `LambdaFunction` in the template
     - Update property `Code` with local directory where your clone this repository e.g. C:\aws-automation-plugins\AWS-CloudWatch-Inventory 
 
 
-Run:
+2. Run:
 
     export LAMBDA_BUCKET=<your-lambda-bucket> && ./deploy.sh
     
-    or 
+   or 
     
     SET LAMBDA_BUCKET=<your-lambda-bucket>
     ./deploy.sh
