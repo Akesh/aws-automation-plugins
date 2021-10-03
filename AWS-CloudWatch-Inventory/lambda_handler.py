@@ -11,7 +11,7 @@ HTML_CONTENT_START = "<!DOCTYPE><html><head><title>CloudWatch Report</title><sty
 HTML_CONTENT_END = "</body></html>"
 
 
-def bytes_2_human_readable(number_of_bytes):
+def bytes_to_human_readable(number_of_bytes):
     if number_of_bytes < 0:
         raise ValueError("!!! number_of_bytes can't be smaller than 0 !!!")
 
@@ -50,7 +50,7 @@ def get_cloudwatch_data(event, context):
         while True:
             for cwlog_group in cwlogs_list_response['logGroups']:
                 log_group_name = cwlog_group["logGroupName"]
-                log_group_data_size = bytes_2_human_readable(cwlog_group["storedBytes"])
+                log_group_data_size = bytes_to_human_readable(cwlog_group["storedBytes"])
                 table_row = "<tr><td>"
                 if "GB" in log_group_data_size or "TB" in log_group_data_size:
                     table_row = '<tr style="background: #FF0000"><td>'
