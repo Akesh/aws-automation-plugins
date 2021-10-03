@@ -20,12 +20,12 @@ This automation intents to list all the cloudwatch log groups in a region and da
 
 2. Run:
 
-    export LAMBDA_BUCKET=<your-lambda-bucket> && ./deploy.sh
+       export LAMBDA_BUCKET=<your-lambda-bucket> && ./deploy.sh
     
-   or 
+       or 
     
-    SET LAMBDA_BUCKET=<your-lambda-bucket>
-    ./deploy.sh
+       SET LAMBDA_BUCKET=<your-lambda-bucket>
+       ./deploy.sh
 
 ## Stack Details
 
