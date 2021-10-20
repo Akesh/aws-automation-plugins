@@ -74,4 +74,4 @@ When you hit API Gateway URL, it generates a `HTML REPORT` which flags unsteady 
 
 
 ## API Gateway URL
-![image](https://user-images.githubusercontent.com/11420765/135760442-7d2837a8-015c-4784-baf7-0f9cd9cbaec8.png)
+![image](https://user-images.githubusercontent.com/11420765/138163821-435b425b-275a-4d44-a738-f5e36e5bcb72.png)
