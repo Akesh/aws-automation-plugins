@@ -39,16 +39,16 @@ Resources:
       Handler: lambda_handler.generate_health_report
       Description: Lambda function to generate ECS service health report
       Runtime: python3.8
-      MemorySize: '128'
-      Timeout: '300'
+      MemorySize: '256'
+      Timeout: '30'
       Role:
         Fn::GetAtt:
         - LambdaRole
         - Arn
       FunctionName: ECSHealthReport
       Code:
-        S3Bucket: bfs-blcl-cmp
-        S3Key: e672c532c1daf0ef1b55d2bf1c108ac1
+        S3Bucket: amazon-ecs-inventory-bucket
+        S3Key: 0b70c9153f92a6b3c8b76520a83a62e1
   APIGatewayAccessRole:
     Type: AWS::IAM::Role
     Properties:

@@ -5,7 +5,7 @@ from processors.aws_inventory_processor import AWSInventoryProcessor
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-HTML_CONTENT_START = "<!DOCTYPE><html><head><title>ECS Service Health Report</title><style>table{font-family:arial,sans-serif;border:1px solid #dddddd;width:100%;} h2{font-family:arial,sans-serif;width:100%;text-align:center;} h3{font-family:arial,sans-serif;width:100%;padding-left:25%;} td,th{border:1px solid #dddddd;text-align:left; padding:8px;} tr:nth-child(even){background-color:#dddddd;}</style></head><body>"
+HTML_CONTENT_START = "<!DOCTYPE><html><head><title>ECS Service Health Report</title><style>table{font-family:arial,sans-serif;border:1px solid #dddddd;width:100%;} h2{font-family:arial,sans-serif;width:100%;text-align:center;} h3{font-family:arial,sans-serif;width:100%;padding-left:25%;} td,th{border:1px solid #dddddd;text-align:left; padding:8px; width:25%} tr:nth-child(even){background-color:#dddddd;}</style></head><body>"
 HTML_CONTENT_END = "</body></html>"
 
 
