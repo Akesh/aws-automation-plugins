@@ -51,13 +51,13 @@ Lambda function in this project lists all the clusters. Create one thread per cl
 
 > Please note all the AWS API calls are retried using exponential backoff algorithm in case of API throtlling errors.
 
-When you hit API Gateway URL, it generates a `HTML Report` which flags unsteady services in RED. This report is useful to get single page view of your ECS inventory and health of ECS services which can help you for monitoring.
+When you hit API Gateway URL, it generates a `HTML REPORT` which flags unsteady services in RED. This report is useful to get single page view of your ECS inventory and health of ECS services which can help you for monitoring.
 
 
 ### Few of the use cases of this utility are
 - If you are stopping your non-prod environment everyday post business hours and starting it before business hours then this utility can help you generate environment health report
-- Your developers don't need to sign-in to AWS console just to check if the ECS service they just deployed is stable or not. They can simply run this utility for required cluster and can check health of ECS service on their own
-- If developers or QA team face any issues during testing they can check health of all the services on their own and figure out issues coming due to unsteady services
+- Your developers don't need to sign-in to AWS console just to check if the ECS service they just deployed is stable or not. They can simply hit the `API Gateway URL` for required cluster and can check health of ECS service on their own
+- If developers or QA team face any issues during testing they can check health of all the services on their own and figure out issues coming due to unsteady services.
 - If you are using EC2-ECS clusters then as part of patching, you have to replace EC2 instances with the new AMI and in this case you can use this utility to check if all the ECS services in that particular cluster are steady post replacing instances with newly patched AMI
 
 
