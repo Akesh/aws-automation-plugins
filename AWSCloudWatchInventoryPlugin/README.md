@@ -15,7 +15,7 @@ This automation intents to list all the cloudwatch log groups in a region and da
 1. Update:
     Update `cfn.template` to update following properties
     - Find logical id `LambdaFunction` in the template
-    - Update property `Code` with local directory where your clone this repository e.g. C:\aws-automation-plugins\AWS-CloudWatch-Inventory 
+    - Update property `Code` with local directory where your clone this repository e.g. C:\aws-automation-plugins\AWSCloudWatchInventoryPlugin
 
 
 2. Run:
@@ -41,5 +41,3 @@ Lambda function in this project iterates through all the cloudwatch log groups a
 
 ## API Gateway URL
 ![image](https://user-images.githubusercontent.com/11420765/135760442-7d2837a8-015c-4784-baf7-0f9cd9cbaec8.png)
-
-
