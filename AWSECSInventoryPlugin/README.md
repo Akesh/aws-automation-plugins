@@ -51,7 +51,14 @@ Lambda function in this project lists all the clusters. Create one thread per cl
 
 > Please note all the AWS API calls are retried using exponential backoff algorithm in case of API throtlling errors.
 
-iterates through all the cloudwatch log groups and identify stored bytes of each log group. It then convert stored bytes into human readable format. When you hit API Gateway URL, it generates a `HTML Report` which flags log groups storing GB or TB data in RED. This report is useful to get consolidated view of all log groups and the stored data in Bytes, KB, MB, GB and TB
+When you hit API Gateway URL, it generates a `HTML Report` which flags unsteady services in RED. This report is useful to get single page view of your ECS inventory and health of ECS services which can help you for monitoring.
+
+
+### Few of the use cases of this utility are
+- If you are stopping your non-prod environment everyday post business hours and starting it before business hours then this utility can help you generate environment health report
+- Your developers don't need to sign-in to AWS console just to check if the ECS service they just deployed is stable or not. They can simply run this utility for required cluster and can check health of ECS service on their own
+- If developers or QA team face any issues during testing they can check health of all the services on their own and figure out issues coming due to unsteady services
+- If you are using EC2-ECS clusters then as part of patching, you have to replace EC2 instances with the new AMI and in this case you can use this utility to check if all the ECS services in that particular cluster are steady post replacing instances with newly patched AMI
 
 
 ## ECS Console Snippet
@@ -68,5 +75,3 @@ iterates through all the cloudwatch log groups and identify stored bytes of each
 
 ## API Gateway URL
 ![image](https://user-images.githubusercontent.com/11420765/135760442-7d2837a8-015c-4784-baf7-0f9cd9cbaec8.png)
-
-
