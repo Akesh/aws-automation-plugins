@@ -1,4 +1,4 @@
-# AWS CloudWatch Inventory | Cost Optimization
+# Amazon ECS Inventory | Monitoring
 
 ## Pre-Requisites
 If you are creating this stack from your local or from EC2 instance, provide necessary permissions on following services to succesfully create stack
@@ -6,7 +6,6 @@ If you are creating this stack from your local or from EC2 instance, provide nec
 - S3
 - Lambda
 - API gateway
-
 
 
 ## Capability
