@@ -1,0 +1,187 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cloudformation stack to deploy lambda function and expose through API
+  Gateway
+Resources:
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+  RolePolicies:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: LambdaPolicy
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - logs:DescribeLogGroups
+          - ecs:List*
+          - ecs:Describe*
+          Resource: '*'
+      Roles:
+      - Ref: LambdaRole
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Description: Lambda function to generate ECS service health report
+    Properties:
+      Handler: lambda_handler.generate_health_report
+      Description: Lambda function to generate ECS service health report
+      Runtime: python3.8
+      MemorySize: '128'
+      Timeout: '300'
+      Role:
+        Fn::GetAtt:
+        - LambdaRole
+        - Arn
+      FunctionName: ECSHealthReport
+      Code:
+        S3Bucket: bfs-blcl-cmp
+        S3Key: e672c532c1daf0ef1b55d2bf1c108ac1
+  APIGatewayAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - apigateway.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Policies:
+      - PolicyName: ApiGatewayLogsPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:DescribeLogGroups
+            - logs:DescribeLogStreams
+            - logs:PutLogEvents
+            - logs:GetLogEvents
+            - logs:FilterLogEvents
+            Resource: '*'
+  APIGatewayAaccount:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn:
+        Fn::GetAtt:
+        - APIGatewayAccessRole
+        - Arn
+  APIGateway:
+    Type: AWS::ApiGateway::RestApi
+    DependsOn: LambdaFunction
+    Properties:
+      Name: ECSInventoryAPI
+      Description: API used for ECS Inventory
+      FailOnWarnings: true
+  APIGatewayMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: GET
+      RequestParameters:
+        method.request.querystring.cluster: false
+      Integration:
+        Type: AWS
+        IntegrationHttpMethod: POST
+        Uri:
+          Fn::Join:
+          - ''
+          - - 'arn:aws:apigateway:'
+            - Ref: AWS::Region
+            - :lambda:path/2015-03-31/functions/
+            - Fn::GetAtt:
+              - LambdaFunction
+              - Arn
+            - /invocations
+        RequestParameters:
+          integration.request.querystring.cluster: method.request.querystring.cluster
+        RequestTemplates:
+          application/json: "{\n\"cluster\": \"$input.params('cluster')\"\n}"
+        IntegrationResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+            method.response.header.Content-Type: "'text/html'"
+          ResponseTemplates:
+            text/html: $input.path('$')
+        PassthroughBehavior: WHEN_NO_TEMPLATES
+      ResourceId:
+        Fn::GetAtt:
+        - APIGateway
+        - RootResourceId
+      RestApiId:
+        Ref: APIGateway
+      MethodResponses:
+      - StatusCode: 200
+        ResponseParameters:
+          method.response.header.Access-Control-Allow-Origin: false
+          method.response.header.Content-Type: false
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:invokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - LambdaFunction
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+        - ''
+        - - 'arn:aws:execute-api:'
+          - Ref: AWS::Region
+          - ':'
+          - Ref: AWS::AccountId
+          - ':'
+          - Ref: APIGateway
+          - /*
+  APIGatewayDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+    - APIGatewayMethod
+    Properties:
+      RestApiId:
+        Ref: APIGateway
+      Description: deployment
+  APIGatewayStage:
+    Type: AWS::ApiGateway::Stage
+    DependsOn: APIGatewayDeployment
+    Properties:
+      StageName: prod
+      Description: prod Stage
+      RestApiId:
+        Ref: APIGateway
+      DeploymentId:
+        Ref: APIGatewayDeployment
+Outputs:
+  APIGatewayURL:
+    Description: API Gateway URL
+    Export:
+      Name: APIGatewayUrl
+    Value:
+      Fn::Join:
+      - ''
+      - - https://
+        - Ref: APIGateway
+        - .execute-api.
+        - Ref: AWS::Region
+        - .amazonaws.com/
+        - Ref: APIGatewayStage
+        - /
