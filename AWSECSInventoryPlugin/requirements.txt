@@ -1,3 +1,4 @@
 boto3~=1.18.58
 awsretry~=1.0.1
 botocore~=1.21.58
+urllib3>=2.6.0 # not directly required, pinned by Snyk to avoid a vulnerability
